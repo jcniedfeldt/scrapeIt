@@ -69,20 +69,21 @@ app.get("/scrape", function (req, res) {
                   // If an error occurred, log it
                   console.log(err);
                   console.log(result);
-                  res.status(501);
+                  res.sendStatus(501);
                 });
             }
             // console.log(`Found article with link: ${result.link}`);
           })
           .catch(function (err) {
             console.log(err);
-            res.status(500);
+            res.sendStatus(500);
 
           });
       }
     });
     // res.json(result);
-    res.status(200);
+    // console.log("Finished Scrape!");
+    res.sendStatus(200);
   });
 });
 

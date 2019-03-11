@@ -1,5 +1,5 @@
 //first, scrape the articles, then get the json for the articles
-$.ajax("/scrape"), {
+$.ajax("/scrape", {
   type: "GET",
   statusCode: {
     200:function (response){
@@ -16,7 +16,7 @@ $.ajax("/scrape"), {
       alert('Successful Scrape.');
    }
   }
-}
+});
 
 $.getJSON("/articles", function (data) {
   // For each one
