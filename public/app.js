@@ -27,12 +27,12 @@ $.getJSON("/articles", function (data) {
 });
 
 function buildNote(note){
-  notecard=$(`<div class="card">`);
+  notecard=$(`<div class="card" id="${note._id}">`);
   noteheader=$(`<div class="card-header">`);
-  noteheader.append("<h2>").text(note.title);
+  noteheader.append(`<h2>${note.title}</h2>`);
   notebody=$(`<div class="card-body">`);
-  notebody.append("<h2>").text(note.body);
-  notebody.append(`<button data-id="${note._id}">`).text("Delete");
+  notebody.append(`<p>${note.body}</p>`);
+  notebody.append(`<button class="delete-note" data-id="${note._id}">Delete</button>`);
 
   notecard.append(noteheader);
   notecard.append(notebody);
@@ -106,6 +106,34 @@ $(document).on("click", "#savenote", function () {
       // Empty the notes section
       // $("#newnote").empty();
     });
+
+  // Also, remove the values entered in the input and textarea for note entry
+  $("#titleinput").val("");
+  $("#bodyinput").val("");
+});
+
+$(document).on("click", ".delete-note", function () {
+  // Grab the id associated with the article from the submit button
+  var thisId = $(this).attr("data-id");
+
+  // Run a POST request to change the note, using what's entered in the inputs
+  $.ajax({
+    method: "GET",
+    url: "/api/delete-note/" + thisId,
+    statusCode: {
+      200:function (response){
+        console.log("Deleted Note.");
+        $(`#${thisId}`).remove();
+      },
+      500:function (response){
+        console.log("Error deleting Note!");
+      console.log(result);
+      },
+      success: function () {
+        alert('Successful Note Deletion.');
+     }
+    }
+  })
 
   // Also, remove the values entered in the input and textarea for note entry
   $("#titleinput").val("");

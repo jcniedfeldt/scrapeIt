@@ -117,6 +117,20 @@ app.get("/articles/:id", function (req, res) {
     });
 });
 
+app.get("/api/delete-note/:id", function (req, res) {
+  // Using the id passed in the id parameter, prepare a query that finds the matching one in our db...
+  db.Article.findOneAndUpdate({ notes: {$in: req.params.id} },{$pull:{notes:req.params.id}})
+    // ..and populate all of the notes associated with it
+    .then(function (dbArticle) {
+      // If we were able to successfully find an Article with the given id, send it back to the client
+      res.sendStatus(200);
+    })
+    .catch(function (err) {
+      // If an error occurred, send it to the client
+      res.sendStatus(500);
+    });
+});
+
 // Route for saving/updating an Article's associated Note
 app.post("/articles/:id", function (req, res) {
   // Create a new note and pass the req.body to the entry
