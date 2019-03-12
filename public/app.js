@@ -22,13 +22,13 @@ $.getJSON("/articles", function (data) {
   // For each one
   for (var i = 0; i < data.length; i++) {
     // Display the apropos information on the page
-    $("#articles").append(`<article class="card" data-id='${data[i]._id}'><div class="card-header"><h2>${data[i].title}</h2><p>${data[i].link}</p></div><div class="card-body">${data[i].synopsis}</div></article>`);
+    $("#articles").append(`<article class="card" data-id='${data[i]._id}'><div class="card-header"><h2>${data[i].title}</h2><a href="${data[i].link}"><p>${data[i].link}</p></a></div><div class="card-body">${data[i].synopsis}</div></article>`);
   }
 });
 
 function buildNote(note){
   notecard=$(`<div class="card" id="${note._id}">`);
-  noteheader=$(`<div class="card-header">`);
+  noteheader=$(`<div class="card-header bg-info">`);
   noteheader.append(`<h2>${note.title}</h2>`);
   notebody=$(`<div class="card-body">`);
   notebody.append(`<p>${note.body}</p>`);
