@@ -31,7 +31,7 @@ function buildNote(note){
   noteheader=$(`<div class="card-header">`);
   noteheader.append("<h2>").text(note.title);
   notebody=$(`<div class="card-body">`);
-  notebody.append("<h2>").text(note.title);
+  notebody.append("<h2>").text(note.body);
   notebody.append(`<button data-id="${note._id}">`).text("Delete");
 
   notecard.append(noteheader);
@@ -44,6 +44,7 @@ function buildNote(note){
 $(document).on("click", "article", function () {
   // Empty the notes from the note section
   $("#notes").empty();
+  $('#newnote').empty();
   // Save the id from the p tag
   var thisId = $(this).attr("data-id");
 
@@ -99,6 +100,9 @@ $(document).on("click", "#savenote", function () {
     .then(function (data) {
       // Log the response
       console.log(data);
+
+      var notehtml=buildNote(data.notes[data.notes.length-1]);
+      $('#notes').append(notehtml);
       // Empty the notes section
       // $("#newnote").empty();
     });
